@@ -9,7 +9,7 @@ nu = 3.0
 NTHERM = 100
 NSKIP = 1
 NSAMPLE = 0
-nmd = 5
+nmd = 10
 seed = 98
 
 ########### set up of unit vector and periodic vector
@@ -148,12 +148,11 @@ vx0 = np.random.normal(0,1,NSITE*NSITE*2)
 vx0 = np.reshape(vx0,(NSITE,NSITE,2),order='C')
 
 np.random.seed(seed)
+tau = 1.0
+itry = 0
+iacc = 0
 
 for istep in range(NTHERM + NSKIP*NSAMPLE):
-    tau = 1.0
-    itry = 0
-    iacc = 0
-
     sp0 = [0]*NSITE*NSITE
     sp0 = np.random.normal(0,1,NSITE*NSITE)
     sp0 = np.reshape(sp0,(NSITE,NSITE),order='C')
@@ -193,7 +192,7 @@ for istep in range(NTHERM + NSKIP*NSAMPLE):
 #
 
     h1 = hamil(sx1,sp1,vx1,vp1,mchi,lam,nu,gg)
-
+    print('{:.16e}'.format(h1),'{:.16e}'.format(h0),'{:.16e}'.format(h1-h0))
     rho = min(1.0,np.exp(h0-h1))
     rand_num = np.random.random()
 
@@ -208,4 +207,4 @@ for istep in range(NTHERM + NSKIP*NSAMPLE):
     vx0 = vx1
 
 pacc = float(iacc/itry)*100
-print(pacc)
+print(iacc,itry,'{:.15f}'.format(pacc))
