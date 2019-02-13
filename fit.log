@@ -1,0 +1,36 @@
+
+
+*******************************************************************************
+Tue Feb  5 19:53:23 2019
+
+
+FIT:    data read from 'nmd10to90_hamildiff.dat' u 1:2:3
+        format = x:z:s
+        x range restricted to [-5.00000e-05 : 0.000800000]
+        #datapoints = 6
+function used for fitting: f(x)
+	f(x) = a*x + b
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a             b            
+   0 3.5711835348e+07   0.00e+00  1.75e+03    1.000000e+00   1.000000e+00
+   8 3.0824690032e-04  -4.58e-07  1.75e-05    7.135523e+01  -1.338351e-05
+
+After 8 iterations the fit converged.
+final sum of squares of residuals : 0.000308247
+rel. change during last iteration : -4.58394e-12
+
+degrees of freedom    (FIT_NDF)                        : 4
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.00877848
+variance of residuals (reduced chisquare) = WSSR/ndf   : 7.70617e-05
+p-value of the Chisq distribution (FIT_P)              : 1
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a               = 71.3552          +/- 0.01649      (0.02311%)
+b               = -1.33835e-05     +/- 3.272e-06    (24.45%)
+
+correlation matrix of the fit parameters:
+                a      b      
+a               1.000 
+b              -0.896  1.000 

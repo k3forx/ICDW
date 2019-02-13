@@ -326,7 +326,7 @@ program ICDW_HMC
     ! Compute initial Hamiltonian
     !
     h0 = hamil(sx0,sp0,vx0,vp0,mchi,lam,nu,gg)
-!    write(*,'(ES24.15)') h0
+    write(*,'(ES24.15)') h0
 
     sx1(:,:) = sx0(:,:)
     sp1(:,:) = sp0(:,:)
@@ -358,7 +358,7 @@ program ICDW_HMC
     h1 = hamil(sx1,sp1,vx1,vp1,mchi,lam,nu,gg)
 !    write(*,'(ES24.15)') h1
 
-    write(*,'(ES24.15)') h1-h0
+!    write(*,'(ES24.15)') h1-h0
 !    rho = min(1.0_DP,exp(h0-h1))
 !    rand_num = grnd()
 !
