@@ -1,0 +1,15 @@
+[param]
+NSITE = 16
+dim = 2
+
+mchi = 2.23606797749979
+gg = 0.8
+lam = 0.1
+nu = 3.0
+
+NTHERM = 10
+NSKIP = 1
+NSAMPLE = 0
+
+nmd = 10
+seed = 98
