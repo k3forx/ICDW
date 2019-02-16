@@ -19,7 +19,7 @@ NSKIP = config.getint('param','NSKIP')
 NSAMPLE = config.getint('param','NSAMPLE')
 
 nmd = config.getint('param','nmd')
-seed = config.getint('param','seed')
+iseed = config.getint('param','seed')
 ########################################################
 ########### set up of unit vector and periodic vector
 ########################################################
@@ -149,11 +149,11 @@ def sum_vec (v,i,j):
 ################ main program ##################
 ################################################
 ################################################
+np.random.seed(seed=iseed)
 
 sx0 = np.random.normal(0,1,(NSITE,NSITE))
 vx0 = np.random.normal(0,1,(NSITE,NSITE,dim))
 
-np.random.seed(seed)
 tau = 1.0
 itry = 0
 iacc = 0
