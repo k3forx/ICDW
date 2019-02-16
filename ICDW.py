@@ -5,7 +5,7 @@ mchi = np.sqrt(5)
 gg = 0.8
 lam = 0.1
 nu = 3.0
-NTHERM = 5
+NTHERM = 10
 NSKIP = 1
 NSAMPLE = 0
 nmd = 10
@@ -84,7 +84,8 @@ def get_scalar_force (sx,vx,mchi,lam,nu,gg):
         for j in range(NSITE):
             div_s = div_sca(sx,i,j)
             div_v = div_vec(vx,i,j)
-            sf[i,j] = div_s - 4.0*lam*sx[i,j]*(sx[i,j]**2 - nu**2) + gg*(div_v - gg*sx[i,j])/mchi**2
+            sf[i,j] = div_s - 4.0*lam*sx[i,j]*(sx[i,j]**2 - nu**2) \
+                        + gg*(div_v - gg*sx[i,j])/mchi**2
     return sf
 
 
@@ -115,7 +116,8 @@ def get_vector_force (sx,vx,mchi,lam,nu,gg):
 def div_sca (s,i,j):
     div_s = 0.0
     for k in range(dim):
-        div_s += s[pn[i+mu[k,0]+2],pn[j+mu[k,1]+2]] - 2.0*s[i,j] + s[pn[i-mu[k,0]+2],pn[j-mu[k,1]+2]]
+        div_s += s[pn[i+mu[k,0]+2],pn[j+mu[k,1]+2]] \
+                    - 2.0*s[i,j] + s[pn[i-mu[k,0]+2],pn[j-mu[k,1]+2]]
     return div_s
 
 
@@ -126,7 +128,7 @@ def div_vec (v,i,j) :
     return 0.5*div_v
 
 
-def sum_vec (v,i,j) :
+def sum_vec (v,i,j):
     sum_v = 0.0
     for k in range(dim):
         sum_v += v[i,j,k]**2
@@ -170,19 +172,23 @@ for istep in range(NTHERM + NSKIP*NSAMPLE):
     vx2 = vx1
     vp2 = vp1
 
-    leapfrog_xpx_md(tau,nmd,sx2,sp2,vx2,vp2,mchi,lam,nu,gg)
+    sx2,sp2,vx2,vp2 = leapfrog_xpx_md(tau,nmd,sx2,sp2,vx2,vp2,mchi,lam,nu,gg)
     h2 = hamil(sx2,sp2,vx2,vp2,mchi,lam,nu,gg)
 
     sp2 = -sp2
     vp2 = -vp2
 
-    print('@',istep,sp0[3,3]-sp2[3,3],sx0[15,2]-sx2[15,2],\
-            vp0[2,10,0] - vp2[2,10,0], vp0[8,4,1] - vp2[8,4,1],\
-            vx0[4,5,0] - vx2[4,5,0], vx0[12,7,1] - vx1[12,7,1])
+    print('@',format(istep,'10'),format(sp0[3,3]-sp2[3,3],' .16E'),\
+            format(sx0[15,2] - sx2[15,2],' .16E'),\
+            format(vp0[2,10,0] - vp2[2,10,0],' .16E'),\
+            format(vp0[8,4,1] - vp2[8,4,1],' .16E'),\
+            format(vx0[4,5,0] - vx2[4,5,0],' .16E'),\
+            format(vx0[12,7,1] - vx2[12,7,1],' .16E'))
 #
 
     h1 = hamil(sx1,sp1,vx1,vp1,mchi,lam,nu,gg)
     # print('{:.16e}'.format(h1),'{:.16e}'.format(h0),'{:.16e}'.format(h1-h0))
+
     rho = min(1.0,np.exp(h0-h1))
     rand_num = np.random.random()
 
@@ -193,8 +199,16 @@ for istep in range(NTHERM + NSKIP*NSAMPLE):
         sx1 = sx0
         vx1 = vx1
 
+    if (istep >= NTHERM and mod(istep,NSKIP) == 0):
+        print(format(istep,'10'),format(sx1[8,8],' :16E'))
+
     sx0 = sx1
     vx0 = vx1
 
 pacc = float(iacc/itry)*100
-#print(iacc,itry,'{:.15f}'.format(pacc))
+print('# HMC Metropolis test statistics')
+print('# tau =',format(tau,'5'),' nmd =',format(nmd,'5'),' dt =',format(tau/nmd,'.16E'))
+print('# iacc =',format(iacc,'10'),' itry =',format(itry,'10'),' Pacc =',format(pacc,'10.6F'))
+print('# mchi =',format(mchi,'.16E'),' lam =',format(lam,'.16E'))
+print('#  nu  =',format(nu,'.16E'),'  g  =',format(gg,'.16E'))
+
