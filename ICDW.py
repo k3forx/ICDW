@@ -1,16 +1,25 @@
+import configparser
 import numpy as np
-########### constant
-NSITE = 16
-mchi = np.sqrt(5)
-gg = 0.8
-lam = 0.1
-nu = 3.0
-NTHERM = 10
-NSKIP = 1
-NSAMPLE = 0
-nmd = 10
-seed = 98
-dim = 2
+########################################
+########### read parameter #############
+########################################
+config = configparser.ConfigParser()
+config.read('pHMC_PARAM')
+
+NSITE = config.getint('param','NSITE')
+dim = config.getint('param','dim')
+
+mchi = config.getfloat('param','mchi')
+gg = config.getfloat('param','gg')
+lam = config.getfloat('param','lam')
+nu = config.getfloat('param','nu')
+
+NTHERM = config.getint('param','NTHERM')
+NSKIP = config.getint('param','NSKIP')
+NSAMPLE = config.getint('param','NSAMPLE')
+
+nmd = config.getint('param','nmd')
+seed = config.getint('param','seed')
 ########################################################
 ########### set up of unit vector and periodic vector
 ########################################################
