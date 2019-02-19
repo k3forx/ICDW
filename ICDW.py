@@ -216,8 +216,7 @@ for istep in range(NTHERM + NSKIP*NSAMPLE):
 
 pacc = float(iacc/itry)*100
 print('# HMC Metropolis test statistics')
-print('# tau =',format(tau,'5'),' nmd =',format(nmd,'5'),' dt =',format(tau/nmd,'.16E'))
-print('# iacc =',format(iacc,'10'),' itry =',format(itry,'10'),' Pacc =',format(pacc,'10.6F'))
-print('# mchi =',format(mchi,'.16E'),' lam =',format(lam,'.16E'))
-print('#  nu  =',format(nu,'.16E'),'  g  =',format(gg,'.16E'))
-
+print('# tau = %5d, nmd = %5d, dt = %.16E'%(tau,nmd,tau/nmd))
+print('# iacc = %10d, ityr = %10d, Pacc = %5d'%(iacc,itry,pacc))
+print('# mchi = %.16E, lam = %.16E'%(mchi,lam))
+print('#  nu  = %.16E,  g  = %.16E'%(nu,gg))
